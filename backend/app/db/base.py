@@ -1,4 +1,5 @@
 from app.models import Base
+from app.models.gamification import UserStats  # Ensure UserStats is imported
 
 
 async def init_db():

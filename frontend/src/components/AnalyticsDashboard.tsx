@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { analyticsService } from '../services/analyticsService'
+import { exportService } from '../services/exportService'
 import type { BestDays, CategoryStats, CheckinsByDate, OverallStats } from '../services/analyticsService'
 import './AnalyticsDashboard.css'
 
@@ -9,6 +10,7 @@ export default function AnalyticsDashboard() {
   const [checkinsByDate, setCheckinsByDate] = useState<CheckinsByDate['checkins_by_date']>({})
   const [categoryStats, setCategoryStats] = useState<CategoryStats['category_stats']>({})
   const [isLoading, setIsLoading] = useState(true)
+  const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -69,9 +71,25 @@ export default function AnalyticsDashboard() {
 
   const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
+  const handleExportPDF = async () => {
+    setIsExporting(true)
+    try {
+      await exportService.exportToPDF()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to export PDF')
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   return (
     <div className="analytics-dashboard">
-      <h2>Analytics Dashboard</h2>
+      <div className="dashboard-header">
+        <h2>Analytics Dashboard</h2>
+        <button className="export-btn" onClick={handleExportPDF} disabled={isExporting}>
+          {isExporting ? 'Exporting...' : '📄 Export PDF'}
+        </button>
+      </div>
 
       {/* Overall Stats Cards */}
       {overallStats && (

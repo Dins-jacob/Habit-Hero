@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db
 from app.schemas.habit_log import HabitLogCreate, HabitLogResponse, HabitLogUpdate
+from app.services.gamification_service import GamificationService
 from app.services.habit_log_service import HabitLogService
 
 router = APIRouter()
@@ -16,6 +17,20 @@ async def create_habit_log(
 ) -> HabitLogResponse:
     """Create a new habit log entry (check-in)."""
     log = await HabitLogService.create(db, log_in)
+    
+    # Award XP for check-in
+    checkin_xp = await GamificationService.calculate_xp_for_checkin()
+    await GamificationService.add_xp(db, checkin_xp)
+    
+    # Check for streak bonus
+    streak = await HabitLogService.get_streak(db, log_in.habit_id)
+    streak_xp = await GamificationService.calculate_xp_for_streak(streak)
+    if streak_xp > 0:
+        await GamificationService.add_xp(db, streak_xp)
+    
+    # Check for new badges
+    await GamificationService.check_badges(db)
+    
     return HabitLogResponse.model_validate(log)
 
 

@@ -1,4 +1,5 @@
 import type { Habit } from '../types'
+import { syncHabitToCalendar } from '../utils/calendarSync'
 import './HabitList.css'
 
 interface HabitListProps {
@@ -112,9 +113,18 @@ export default function HabitList({
               </div>
               <div className="habit-actions-bottom">
                 {onCheckIn && (
-                  <button className="checkin-btn" onClick={() => onCheckIn(habit.id)}>
-                    ✓ Check In
-                  </button>
+                  <>
+                    <button className="checkin-btn" onClick={() => onCheckIn(habit.id)}>
+                      ✓ Check In
+                    </button>
+                    <button
+                      className="calendar-sync-btn"
+                      onClick={() => syncHabitToCalendar(habit.name, habit.frequency, habit.start_date)}
+                      title="Add to Google Calendar"
+                    >
+                      📅 Add to Calendar
+                    </button>
+                  </>
                 )}
               </div>
               <div className="habit-footer">

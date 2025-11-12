@@ -149,6 +149,9 @@
 
 .habit-actions-bottom {
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .checkin-btn {
@@ -168,6 +171,24 @@
   background: #047857;
   transform: translateY(-1px);
   box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+}
+
+.calendar-sync-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background: #f0fdf4;
+  color: #059669;
+  border: 1px solid #059669;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calendar-sync-btn:hover {
+  background: #059669;
+  color: white;
 }
 
 .habit-footer {

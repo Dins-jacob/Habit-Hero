@@ -8,6 +8,7 @@ import CheckInForm from './components/CheckInForm'
 import ConfirmDialog from './components/ConfirmDialog'
 import HabitSuggestions from './components/HabitSuggestions'
 import MotivationalQuote from './components/MotivationalQuote'
+import GamificationPanel from './components/GamificationPanel'
 import { apiService } from './services/api'
 import { habitService } from './services/habitService'
 import { habitLogService } from './services/habitLogService'
@@ -31,6 +32,7 @@ function App() {
   const [streaks, setStreaks] = useState<Record<number, number>>({})
   const [successRates, setSuccessRates] = useState<Record<number, number>>({})
   const [viewMode, setViewMode] = useState<ViewMode>('habits')
+  const [gamificationRefresh, setGamificationRefresh] = useState(0)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -155,6 +157,7 @@ function App() {
     setShowCheckIn(false)
     setSelectedHabitId(null)
     loadHabits() // Reload to update streaks
+    setGamificationRefresh((prev) => prev + 1) // Trigger gamification refresh
   }
 
   const handleCheckInCancel = () => {
@@ -217,6 +220,7 @@ function App() {
 
         {viewMode === 'habits' ? (
           <>
+            <GamificationPanel refreshTrigger={gamificationRefresh} />
             <MotivationalQuote />
             {showForm ? (
               <HabitForm
