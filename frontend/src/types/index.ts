@@ -5,3 +5,6 @@ export interface ApiError {
   detail?: string
 }
 
+// Re-export all habit types
+export * from './habit'
+export * from './habitLog'

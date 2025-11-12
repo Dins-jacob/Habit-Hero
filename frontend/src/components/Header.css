@@ -2,8 +2,9 @@
   padding: 2rem;
   text-align: center;
   color: white;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .app-header h1 {
@@ -11,12 +12,14 @@
   font-size: 3rem;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  color: white;
 }
 
 .subtitle {
   margin: 0.5rem 0 0 0;
   font-size: 1.2rem;
-  opacity: 0.9;
+  opacity: 0.95;
+  color: white;
 }
 
 @media (max-width: 768px) {
@@ -28,4 +31,3 @@
     font-size: 1rem;
   }
 }
-
