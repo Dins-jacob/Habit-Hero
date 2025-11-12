@@ -1,8 +1,20 @@
 ﻿from fastapi import FastAPI
 
-app = FastAPI(title="Habit Hero API", version="0.1.0")
+from app.api.router import api_router
+from app.core.config import get_settings
+
+settings = get_settings()
+
+app = FastAPI(
+    title=settings.app_name,
+    version=settings.app_version,
+    debug=settings.debug,
+)
 
 
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+@app.get("/", summary="API root")
+def read_root() -> dict[str, str]:
+    return {"message": "Habit Hero API"}
+
+
+app.include_router(api_router, prefix="/api")
