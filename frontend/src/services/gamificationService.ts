@@ -19,7 +19,7 @@ export interface GamificationStats {
 
 class GamificationService {
   async getStats(): Promise<GamificationStats> {
-    const response = await fetch(`${API_BASE_URL}/stats`)
+    const response = await fetch(`${API_BASE_URL}stats`)
     if (!response.ok) {
       throw new Error('Failed to fetch gamification stats')
     }
@@ -28,7 +28,7 @@ class GamificationService {
 
   async checkBadges(): Promise<{ new_badges: Badge[]; message: string }> {
     try {
-      const response = await fetch(`${API_BASE_URL}/check-badges`, {
+      const response = await fetch(`${API_BASE_URL}check-badges`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

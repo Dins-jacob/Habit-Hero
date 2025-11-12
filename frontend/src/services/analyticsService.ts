@@ -24,7 +24,7 @@ export interface OverallStats {
 
 class AnalyticsService {
   async getBestDays(habitId?: number): Promise<BestDays> {
-    const url = habitId ? `${API_BASE_URL}/best-days?habit_id=${habitId}` : `${API_BASE_URL}/best-days`
+    const url = habitId ? `${API_BASE_URL}best-days?habit_id=${habitId}` : `${API_BASE_URL}best-days`
     const response = await fetch(url)
     if (!response.ok) {
       throw new Error('Failed to fetch best days')
@@ -34,8 +34,8 @@ class AnalyticsService {
 
   async getCheckinsByDate(habitId?: number, days: number = 30): Promise<CheckinsByDate> {
     const url = habitId
-      ? `${API_BASE_URL}/checkins-by-date?habit_id=${habitId}&days=${days}`
-      : `${API_BASE_URL}/checkins-by-date?days=${days}`
+      ? `${API_BASE_URL}checkins-by-date?habit_id=${habitId}&days=${days}`
+      : `${API_BASE_URL}checkins-by-date?days=${days}`
     const response = await fetch(url)
     if (!response.ok) {
       throw new Error('Failed to fetch check-ins by date')
@@ -44,7 +44,7 @@ class AnalyticsService {
   }
 
   async getCategoryStats(): Promise<CategoryStats> {
-    const response = await fetch(`${API_BASE_URL}/category-stats`)
+    const response = await fetch(`${API_BASE_URL}category-stats`)
     if (!response.ok) {
       throw new Error('Failed to fetch category stats')
     }
@@ -52,7 +52,7 @@ class AnalyticsService {
   }
 
   async getOverallStats(): Promise<OverallStats> {
-    const response = await fetch(`${API_BASE_URL}/overall`)
+    const response = await fetch(`${API_BASE_URL}overall`)
     if (!response.ok) {
       throw new Error('Failed to fetch overall stats')
     }

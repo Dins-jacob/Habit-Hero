@@ -1,13 +1,26 @@
 ﻿from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.api.router import api_router
 from app.core.config import get_settings
 from app.db.base import init_db
 
 settings = get_settings()
+
+
+class HTTPSRedirectMiddleware(BaseHTTPMiddleware):
+    """Middleware to ensure redirects use HTTPS."""
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        # Fix Location header in redirects to use HTTPS
+        if response.status_code in (301, 302, 303, 307, 308):
+            location = response.headers.get("location")
+            if location and location.startswith("http://"):
+                response.headers["location"] = location.replace("http://", "https://", 1)
+        return response
 
 
 @asynccontextmanager
@@ -23,6 +36,9 @@ app = FastAPI(
     debug=settings.debug,
     lifespan=lifespan,
 )
+
+# Add HTTPS redirect fix middleware (before CORS)
+app.add_middleware(HTTPSRedirectMiddleware)
 
 # Add CORS middleware
 app.add_middleware(

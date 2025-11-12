@@ -33,7 +33,7 @@ export interface ExportData {
 
 class ExportService {
   async getReportData(): Promise<ExportData> {
-    const response = await fetch(`${API_BASE_URL}/pdf`)
+    const response = await fetch(`${API_BASE_URL}pdf`)
     if (!response.ok) {
       throw new Error('Failed to fetch report data')
     }

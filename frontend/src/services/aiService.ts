@@ -39,7 +39,7 @@ export interface ProgressInsights {
 
 class AIService {
   async getHabitSuggestions(): Promise<HabitSuggestion[]> {
-    const response = await fetch(`${API_BASE_URL}/suggest-habits`)
+    const response = await fetch(`${API_BASE_URL}suggest-habits`)
     if (!response.ok) {
       throw new Error('Failed to fetch habit suggestions')
     }
@@ -48,7 +48,7 @@ class AIService {
   }
 
   async analyzeMood(notes: string): Promise<MoodAnalysis> {
-    const response = await fetch(`${API_BASE_URL}/analyze-mood`, {
+    const response = await fetch(`${API_BASE_URL}analyze-mood`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,8 @@ class AIService {
 
   async getMotivationalQuote(): Promise<MotivationalQuote> {
     try {
-      const response = await fetch(`${API_BASE_URL}/motivational-quote`)
+      // API_BASE_URL already ends with /, so don't add another /
+      const response = await fetch(`${API_BASE_URL}motivational-quote`)
       if (!response.ok) {
         throw new Error('Failed to fetch motivational quote')
       }
@@ -77,7 +78,8 @@ class AIService {
   }
 
   async getProgressInsights(): Promise<ProgressInsights> {
-    const response = await fetch(`${API_BASE_URL}/progress-insights`)
+    // API_BASE_URL already ends with /, so don't add another /
+    const response = await fetch(`${API_BASE_URL}progress-insights`)
     if (!response.ok) {
       throw new Error('Failed to fetch progress insights')
     }

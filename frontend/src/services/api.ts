@@ -8,7 +8,7 @@ export interface HealthResponse {
 
 class ApiService {
   async getHealth(): Promise<HealthResponse> {
-    const response = await fetch(`${API_BASE_URL}/health`)
+    const response = await fetch(`${API_BASE_URL}health`)
     if (!response.ok) {
       throw new Error('Failed to fetch health status')
     }

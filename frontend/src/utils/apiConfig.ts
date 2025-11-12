@@ -27,8 +27,8 @@ export const getApiBaseUrl = (endpoint: string = '') => {
   }
   
   // Return full URL with endpoint
-  // Don't add trailing slash - FastAPI handles both with and without
-  let finalUrl = endpoint ? `${cleanUrl}/api/${endpoint}` : `${cleanUrl}/api`
+  // Add trailing slash to match Railway's expectation and avoid redirects
+  let finalUrl = endpoint ? `${cleanUrl}/api/${endpoint}/` : `${cleanUrl}/api/`
   
   // Remove double slashes (except after https://)
   finalUrl = finalUrl.replace(/([^:]\/)\/+/g, '$1')

@@ -5,7 +5,7 @@ const API_BASE_URL = getApiBaseUrl('habit-logs')
 
 class HabitLogService {
   async getByHabitId(habitId: number): Promise<HabitLog[]> {
-    const response = await fetch(`${API_BASE_URL}/habit/${habitId}`)
+    const response = await fetch(`${API_BASE_URL}habit/${habitId}/`)
     if (!response.ok) {
       throw new Error('Failed to fetch habit logs')
     }
@@ -13,7 +13,7 @@ class HabitLogService {
   }
 
   async getById(id: number): Promise<HabitLog> {
-    const response = await fetch(`${API_BASE_URL}/${id}`)
+    const response = await fetch(`${API_BASE_URL}${id}/`)
     if (!response.ok) {
       throw new Error('Failed to fetch habit log')
     }
@@ -35,7 +35,7 @@ class HabitLogService {
   }
 
   async update(id: number, log: HabitLogUpdate): Promise<HabitLog> {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
+    const response = await fetch(`${API_BASE_URL}${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ class HabitLogService {
   }
 
   async delete(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
+    const response = await fetch(`${API_BASE_URL}${id}/`, {
       method: 'DELETE',
     })
     if (!response.ok) {
@@ -58,7 +58,7 @@ class HabitLogService {
   }
 
   async getStreak(habitId: number): Promise<number> {
-    const response = await fetch(`${API_BASE_URL}/habit/${habitId}/streak`)
+    const response = await fetch(`${API_BASE_URL}habit/${habitId}/streak`)
     if (!response.ok) {
       throw new Error('Failed to fetch streak')
     }
@@ -67,7 +67,7 @@ class HabitLogService {
   }
 
   async getSuccessRate(habitId: number): Promise<number> {
-    const response = await fetch(`${API_BASE_URL}/habit/${habitId}/success-rate`)
+    const response = await fetch(`${API_BASE_URL}habit/${habitId}/success-rate`)
     if (!response.ok) {
       throw new Error('Failed to fetch success rate')
     }

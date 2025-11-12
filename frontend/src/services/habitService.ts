@@ -13,7 +13,7 @@ class HabitService {
   }
 
   async getById(id: number): Promise<Habit> {
-    const response = await fetch(`${API_BASE_URL}/${id}`)
+    const response = await fetch(`${API_BASE_URL}${id}/`)
     if (!response.ok) {
       throw new Error('Failed to fetch habit')
     }
@@ -35,7 +35,7 @@ class HabitService {
   }
 
   async update(id: number, habit: HabitUpdate): Promise<Habit> {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
+    const response = await fetch(`${API_BASE_URL}${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ class HabitService {
   }
 
   async delete(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
+    const response = await fetch(`${API_BASE_URL}${id}/`, {
       method: 'DELETE',
     })
     if (!response.ok) {
