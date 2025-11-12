@@ -57,12 +57,6 @@ export default function CheckinsOverTimeChart({ data, days = 30 }: CheckinsOverT
             strokeWidth={3}
             fillOpacity={1}
             fill="url(#colorCount)"
-          />
-          <Line
-            type="monotone"
-            dataKey="count"
-            stroke="#10b981"
-            strokeWidth={2}
             dot={{ fill: '#059669', r: 4 }}
             activeDot={{ r: 6 }}
           />
