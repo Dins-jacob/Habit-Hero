@@ -27,7 +27,11 @@ export const getApiBaseUrl = (endpoint: string = '') => {
   }
   
   // Return full URL with endpoint
-  const finalUrl = endpoint ? `${cleanUrl}/api/${endpoint}` : `${cleanUrl}/api`
+  // Add trailing slash to avoid Railway redirects
+  let finalUrl = endpoint ? `${cleanUrl}/api/${endpoint}/` : `${cleanUrl}/api/`
+  
+  // Remove double slashes (except after https://)
+  finalUrl = finalUrl.replace(/([^:]\/)\/+/g, '$1')
   
   if (typeof window !== 'undefined') {
     console.log('[API Config] Final URL:', finalUrl)
