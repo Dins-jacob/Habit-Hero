@@ -1,0 +1,22 @@
+﻿# Node
+node_modules/
+yarn.lock
+pnpm-lock.yaml
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.*
+
+# Build
+frontend/dist/
+backend/.pytest_cache/
+backend/.mypy_cache/
