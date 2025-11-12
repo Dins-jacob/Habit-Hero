@@ -74,7 +74,7 @@ export default function CategoryChart({ data }: CategoryChartProps) {
             fill="#8884d8"
             dataKey="value"
           >
-            {chartData.map((entry, index) => (
+            {chartData.map((_, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
@@ -85,7 +85,7 @@ export default function CategoryChart({ data }: CategoryChartProps) {
               borderRadius: '8px',
               boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
             }}
-            formatter={(value: number, name: string, props: any) => [
+            formatter={(value: number, _name: string, props: any) => [
               `${value} check-ins (${props.payload.habits} habits)`,
               'Total',
             ]}

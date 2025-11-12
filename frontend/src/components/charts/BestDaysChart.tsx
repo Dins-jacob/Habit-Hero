@@ -50,7 +50,7 @@ export default function BestDaysChart({ data }: BestDaysChartProps) {
             labelFormatter={(label) => `Day: ${label}`}
           />
           <Bar dataKey="count" radius={[8, 8, 0, 0]}>
-            {chartData.map((entry, index) => (
+            {chartData.map((_, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Bar>

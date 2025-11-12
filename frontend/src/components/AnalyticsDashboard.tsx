@@ -42,14 +42,6 @@ export default function AnalyticsDashboard() {
     }
   }
 
-  const getMaxCount = (data: Record<string, number>) => {
-    const values = Object.values(data)
-    return values.length > 0 ? Math.max(...values) : 1
-  }
-
-  const formatCategoryName = (category: string) => {
-    return category.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
-  }
 
   if (isLoading) {
     return (

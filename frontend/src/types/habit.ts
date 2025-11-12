@@ -1,16 +1,20 @@
-export enum HabitFrequency {
-  DAILY = 'daily',
-  WEEKLY = 'weekly',
-}
+export const HabitFrequency = {
+  DAILY: 'daily',
+  WEEKLY: 'weekly',
+} as const
 
-export enum HabitCategory {
-  HEALTH = 'health',
-  WORK = 'work',
-  LEARNING = 'learning',
-  FITNESS = 'fitness',
-  MENTAL_HEALTH = 'mental_health',
-  PRODUCTIVITY = 'productivity',
-}
+export type HabitFrequency = typeof HabitFrequency[keyof typeof HabitFrequency]
+
+export const HabitCategory = {
+  HEALTH: 'health',
+  WORK: 'work',
+  LEARNING: 'learning',
+  FITNESS: 'fitness',
+  MENTAL_HEALTH: 'mental_health',
+  PRODUCTIVITY: 'productivity',
+} as const
+
+export type HabitCategory = typeof HabitCategory[keyof typeof HabitCategory]
 
 export interface Habit {
   id: number
