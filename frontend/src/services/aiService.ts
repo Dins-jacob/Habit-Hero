@@ -17,6 +17,24 @@ export interface MotivationalQuote {
   author: string
 }
 
+export interface ProgressInsight {
+  type: 'success' | 'warning' | 'info'
+  title: string
+  message: string
+  icon: string
+}
+
+export interface Recommendation {
+  action: string
+  habit: string
+  suggestion: string
+}
+
+export interface ProgressInsights {
+  insights: ProgressInsight[]
+  recommendations: Recommendation[]
+}
+
 class AIService {
   async getHabitSuggestions(): Promise<HabitSuggestion[]> {
     const response = await fetch(`${API_BASE_URL}/suggest-habits`)
@@ -43,14 +61,26 @@ class AIService {
   }
 
   async getMotivationalQuote(): Promise<MotivationalQuote> {
-    const response = await fetch(`${API_BASE_URL}/motivational-quote`)
-    if (!response.ok) {
-      throw new Error('Failed to fetch motivational quote')
+    try {
+      const response = await fetch(`${API_BASE_URL}/motivational-quote`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch motivational quote')
+      }
+      const data = await response.json()
+      return data.quote
+    } catch (err) {
+      console.error('Error in getMotivationalQuote:', err)
+      throw err
     }
-    const data = await response.json()
-    return data.quote
+  }
+
+  async getProgressInsights(): Promise<ProgressInsights> {
+    const response = await fetch(`${API_BASE_URL}/progress-insights`)
+    if (!response.ok) {
+      throw new Error('Failed to fetch progress insights')
+    }
+    return response.json()
   }
 }
 
 export const aiService = new AIService()
-

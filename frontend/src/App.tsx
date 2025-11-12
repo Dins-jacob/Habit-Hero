@@ -8,6 +8,7 @@ import ConfirmDialog from './components/ConfirmDialog'
 import HabitSuggestions from './components/HabitSuggestions'
 import MotivationalQuote from './components/MotivationalQuote'
 import GamificationPanel from './components/GamificationPanel'
+import ProgressInsights from './components/ProgressInsights'
 import VisualDecorations from './components/VisualDecorations'
 import { habitService } from './services/habitService'
 import { habitLogService } from './services/habitLogService'
@@ -207,6 +208,7 @@ function App() {
         {viewMode === 'habits' ? (
           <>
             <GamificationPanel refreshTrigger={gamificationRefresh} />
+            <ProgressInsights />
             <MotivationalQuote />
             {showForm ? (
               <HabitForm

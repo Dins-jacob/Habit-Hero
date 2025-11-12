@@ -39,3 +39,10 @@ async def get_motivational_quote() -> dict[str, dict[str, str]]:
     """Get a random motivational quote."""
     quote = AIService.get_motivational_quote()
     return {"quote": quote}
+
+
+@router.get("/progress-insights", summary="Get AI-generated progress insights")
+async def get_progress_insights(db: AsyncSession = Depends(get_db)) -> dict:
+    """Get AI-powered insights and recommendations based on user's habit data."""
+    insights = await AIService.generate_progress_insights(db)
+    return insights
