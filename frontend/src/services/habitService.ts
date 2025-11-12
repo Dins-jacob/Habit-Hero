@@ -13,9 +13,7 @@ class HabitService {
   }
 
   async getById(id: number): Promise<Habit> {
-    // Remove trailing slash from base URL before adding ID
-    const baseUrl = API_BASE_URL.replace(/\/$/, '')
-    const response = await fetch(`${baseUrl}/${id}/`)
+    const response = await fetch(`${API_BASE_URL}/${id}`)
     if (!response.ok) {
       throw new Error('Failed to fetch habit')
     }
@@ -37,9 +35,7 @@ class HabitService {
   }
 
   async update(id: number, habit: HabitUpdate): Promise<Habit> {
-    // Remove trailing slash from base URL before adding ID
-    const baseUrl = API_BASE_URL.replace(/\/$/, '')
-    const response = await fetch(`${baseUrl}/${id}/`, {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -53,9 +49,7 @@ class HabitService {
   }
 
   async delete(id: number): Promise<void> {
-    // Remove trailing slash from base URL before adding ID
-    const baseUrl = API_BASE_URL.replace(/\/$/, '')
-    const response = await fetch(`${baseUrl}/${id}/`, {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'DELETE',
     })
     if (!response.ok) {
