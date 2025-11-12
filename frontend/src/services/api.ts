@@ -1,4 +1,6 @@
-const API_BASE_URL = `${import.meta.env.VITE_API_URL || ''}/api`
+import { getApiBaseUrl } from '../utils/apiConfig'
+
+const API_BASE_URL = getApiBaseUrl()
 
 export interface HealthResponse {
   status: string

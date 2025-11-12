@@ -1,4 +1,6 @@
-const API_BASE_URL = `${import.meta.env.VITE_API_URL || ''}/api/ai`
+import { getApiBaseUrl } from '../utils/apiConfig'
+
+const API_BASE_URL = getApiBaseUrl('ai')
 
 export interface HabitSuggestion {
   name: string
