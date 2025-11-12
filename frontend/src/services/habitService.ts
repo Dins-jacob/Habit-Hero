@@ -1,6 +1,6 @@
 import type { Habit, HabitCreate, HabitUpdate } from '../types'
 
-const API_BASE_URL = '/api/habits'
+const API_BASE_URL = `${import.meta.env.VITE_API_URL || ''}/api/habits`
 
 class HabitService {
   async getAll(): Promise<Habit[]> {

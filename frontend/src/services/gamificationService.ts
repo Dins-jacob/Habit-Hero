@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api/gamification'
+const API_BASE_URL = `${import.meta.env.VITE_API_URL || ''}/api/gamification`
 
 export interface Badge {
   id: string

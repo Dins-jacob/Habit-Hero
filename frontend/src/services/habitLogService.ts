@@ -1,6 +1,6 @@
 import type { HabitLog, HabitLogCreate, HabitLogUpdate } from '../types/habitLog'
 
-const API_BASE_URL = '/api/habit-logs'
+const API_BASE_URL = `${import.meta.env.VITE_API_URL || ''}/api/habit-logs`
 
 class HabitLogService {
   async getByHabitId(habitId: number): Promise<HabitLog[]> {
