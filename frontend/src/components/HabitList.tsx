@@ -4,6 +4,7 @@ import './HabitList.css'
 interface HabitListProps {
   habits: Habit[]
   onDelete?: (id: number) => void
+  onEdit?: (habit: Habit) => void
   onCheckIn?: (habitId: number) => void
   isLoading?: boolean
   streaks?: Record<number, number>
@@ -13,6 +14,7 @@ interface HabitListProps {
 export default function HabitList({
   habits,
   onDelete,
+  onEdit,
   onCheckIn,
   isLoading,
   streaks = {},
@@ -68,16 +70,28 @@ export default function HabitList({
             <div key={habit.id} className="habit-card">
               <div className="habit-header">
                 <h3>{habit.name}</h3>
-                {onDelete && (
-                  <button
-                    className="delete-btn"
-                    onClick={() => onDelete(habit.id)}
-                    aria-label="Delete habit"
-                    title="Delete habit"
-                  >
-                    ×
-                  </button>
-                )}
+                <div className="habit-actions">
+                  {onEdit && (
+                    <button
+                      className="edit-btn"
+                      onClick={() => onEdit(habit)}
+                      aria-label="Edit habit"
+                      title="Edit habit"
+                    >
+                      ✎
+                    </button>
+                  )}
+                  {onDelete && (
+                    <button
+                      className="delete-btn"
+                      onClick={() => onDelete(habit.id)}
+                      aria-label="Delete habit"
+                      title="Delete habit"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
               </div>
               <div className="habit-meta">
                 <span className="badge" style={{ backgroundColor: getCategoryColor(habit.category) }}>
@@ -96,11 +110,13 @@ export default function HabitList({
                   <span className="stat-value">{successRate.toFixed(0)}%</span>
                 </div>
               </div>
-              {onCheckIn && (
-                <button className="checkin-btn" onClick={() => onCheckIn(habit.id)}>
-                  ✓ Check In
-                </button>
-              )}
+              <div className="habit-actions-bottom">
+                {onCheckIn && (
+                  <button className="checkin-btn" onClick={() => onCheckIn(habit.id)}>
+                    ✓ Check In
+                  </button>
+                )}
+              </div>
               <div className="habit-footer">
                 <span className="start-date">Started: {formatDate(habit.start_date)}</span>
               </div>

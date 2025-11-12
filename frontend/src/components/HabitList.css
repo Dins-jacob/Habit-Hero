@@ -46,20 +46,37 @@
   font-weight: 600;
 }
 
+.habit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn,
 .delete-btn {
   background: none;
   border: none;
-  font-size: 1.5rem;
-  color: #ef4444;
+  font-size: 1.25rem;
   cursor: pointer;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
   transition: background-color 0.2s;
+}
+
+.edit-btn {
+  color: #059669;
+}
+
+.edit-btn:hover {
+  background-color: #d1fae5;
+}
+
+.delete-btn {
+  color: #ef4444;
 }
 
 .delete-btn:hover {
@@ -130,6 +147,10 @@
   color: #10b981;
 }
 
+.habit-actions-bottom {
+  margin-bottom: 1rem;
+}
+
 .checkin-btn {
   width: 100%;
   padding: 0.75rem;
@@ -141,7 +162,6 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 1rem;
 }
 
 .checkin-btn:hover {

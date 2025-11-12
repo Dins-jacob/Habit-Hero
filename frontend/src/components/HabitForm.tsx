@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HabitCategory, HabitFrequency, type HabitCreate } from '../types'
 import './HabitForm.css'
 
@@ -6,9 +6,10 @@ interface HabitFormProps {
   onSubmit: (habit: HabitCreate) => Promise<void>
   onCancel?: () => void
   initialData?: Partial<HabitCreate>
+  isEditMode?: boolean
 }
 
-export default function HabitForm({ onSubmit, onCancel, initialData }: HabitFormProps) {
+export default function HabitForm({ onSubmit, onCancel, initialData, isEditMode = false }: HabitFormProps) {
   const [formData, setFormData] = useState<HabitCreate>({
     name: initialData?.name || '',
     frequency: initialData?.frequency || HabitFrequency.DAILY,
@@ -19,6 +20,19 @@ export default function HabitForm({ onSubmit, onCancel, initialData }: HabitForm
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Update form when initialData changes (for edit mode)
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name || '',
+        frequency: initialData.frequency || HabitFrequency.DAILY,
+        category: initialData.category || HabitCategory.HEALTH,
+        start_date: initialData.start_date || new Date().toISOString().split('T')[0],
+        description: initialData.description || null,
+      })
+    }
+  }, [initialData])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
@@ -26,13 +40,16 @@ export default function HabitForm({ onSubmit, onCancel, initialData }: HabitForm
 
     try {
       await onSubmit(formData)
-      setFormData({
-        name: '',
-        frequency: HabitFrequency.DAILY,
-        category: HabitCategory.HEALTH,
-        start_date: new Date().toISOString().split('T')[0],
-        description: null,
-      })
+      if (!isEditMode) {
+        // Only reset form if creating new habit
+        setFormData({
+          name: '',
+          frequency: HabitFrequency.DAILY,
+          category: HabitCategory.HEALTH,
+          start_date: new Date().toISOString().split('T')[0],
+          description: null,
+        })
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save habit')
     } finally {
@@ -42,7 +59,7 @@ export default function HabitForm({ onSubmit, onCancel, initialData }: HabitForm
 
   return (
     <form className="habit-form" onSubmit={handleSubmit}>
-      <h2>Create New Habit</h2>
+      <h2>{isEditMode ? 'Edit Habit' : 'Create New Habit'}</h2>
       {error && <div className="error-message">{error}</div>}
       <div className="form-group">
         <label htmlFor="name">Habit Name *</label>
@@ -112,10 +129,9 @@ export default function HabitForm({ onSubmit, onCancel, initialData }: HabitForm
           </button>
         )}
         <button type="submit" className="btn-primary" disabled={isSubmitting || !formData.name.trim()}>
-          {isSubmitting ? 'Creating...' : 'Create Habit'}
+          {isSubmitting ? (isEditMode ? 'Updating...' : 'Creating...') : isEditMode ? 'Update Habit' : 'Create Habit'}
         </button>
       </div>
     </form>
   )
 }
-
