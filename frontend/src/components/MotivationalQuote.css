@@ -1,0 +1,61 @@
+.motivational-quote {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.quote-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.quote-text {
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+  color: white;
+}
+
+.quote-author {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0 0 1.5rem 0;
+  font-weight: 500;
+}
+
+.refresh-quote-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.refresh-quote-btn:hover {
+  background: white;
+  color: #059669;
+  transform: translateY(-1px);
+}
+
+.loading {
+  padding: 1rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .quote-text {
+    font-size: 1.1rem;
+  }
+}
+

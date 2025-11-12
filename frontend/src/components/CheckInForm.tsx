@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { habitLogService } from '../services/habitLogService'
+import { aiService } from '../services/aiService'
 import type { HabitLogCreate } from '../types/habitLog'
+import type { MoodAnalysis } from '../services/aiService'
 import './CheckInForm.css'
 
 interface CheckInFormProps {
@@ -14,6 +16,35 @@ export default function CheckInForm({ habitId, habitName, onSuccess, onCancel }:
   const [notes, setNotes] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [moodAnalysis, setMoodAnalysis] = useState<MoodAnalysis | null>(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+
+  useEffect(() => {
+    // Analyze mood when notes change (debounced)
+    const timeoutId = setTimeout(() => {
+      if (notes.trim().length > 10) {
+        analyzeMood()
+      } else {
+        setMoodAnalysis(null)
+      }
+    }, 1000)
+
+    return () => clearTimeout(timeoutId)
+  }, [notes])
+
+  const analyzeMood = async () => {
+    if (!notes.trim()) return
+
+    setIsAnalyzing(true)
+    try {
+      const analysis = await aiService.analyzeMood(notes)
+      setMoodAnalysis(analysis)
+    } catch (err) {
+      console.error('Failed to analyze mood:', err)
+    } finally {
+      setIsAnalyzing(false)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,11 +59,23 @@ export default function CheckInForm({ habitId, habitName, onSuccess, onCancel }:
       }
       await habitLogService.create(logData)
       setNotes('')
+      setMoodAnalysis(null)
       onSuccess()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to log check-in')
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const getSentimentColor = (sentiment: string) => {
+    switch (sentiment) {
+      case 'positive':
+        return '#10b981'
+      case 'negative':
+        return '#ef4444'
+      default:
+        return '#6b7280'
     }
   }
 
@@ -52,6 +95,23 @@ export default function CheckInForm({ habitId, habitName, onSuccess, onCancel }:
               placeholder="How did it go? Add any notes about your progress..."
               maxLength={2000}
             />
+            {isAnalyzing && <div className="analyzing-indicator">Analyzing mood...</div>}
+            {moodAnalysis && !isAnalyzing && (
+              <div className="mood-analysis" style={{ borderLeftColor: getSentimentColor(moodAnalysis.sentiment) }}>
+                <div className="mood-header">
+                  <span className="mood-sentiment" style={{ color: getSentimentColor(moodAnalysis.sentiment) }}>
+                    {moodAnalysis.sentiment === 'positive' ? '😊' : moodAnalysis.sentiment === 'negative' ? '😔' : '😐'}{' '}
+                    {moodAnalysis.sentiment.charAt(0).toUpperCase() + moodAnalysis.sentiment.slice(1)}
+                  </span>
+                  <span className="mood-confidence">{(moodAnalysis.confidence * 100).toFixed(0)}% confidence</span>
+                </div>
+                {moodAnalysis.keywords.length > 0 && (
+                  <div className="mood-keywords">
+                    Keywords: {moodAnalysis.keywords.join(', ')}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="form-actions">
             {onCancel && (
@@ -68,4 +128,3 @@ export default function CheckInForm({ habitId, habitName, onSuccess, onCancel }:
     </div>
   )
 }
-

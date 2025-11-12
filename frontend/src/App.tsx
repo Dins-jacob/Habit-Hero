@@ -6,10 +6,13 @@ import HabitList from './components/HabitList'
 import AnalyticsDashboard from './components/AnalyticsDashboard'
 import CheckInForm from './components/CheckInForm'
 import ConfirmDialog from './components/ConfirmDialog'
+import HabitSuggestions from './components/HabitSuggestions'
+import MotivationalQuote from './components/MotivationalQuote'
 import { apiService } from './services/api'
 import { habitService } from './services/habitService'
 import { habitLogService } from './services/habitLogService'
 import type { Habit, HabitCreate, HabitUpdate } from './types'
+import type { HabitSuggestion } from './services/aiService'
 import './App.css'
 
 type ViewMode = 'habits' | 'analytics'
@@ -214,6 +217,7 @@ function App() {
 
         {viewMode === 'habits' ? (
           <>
+            <MotivationalQuote />
             {showForm ? (
               <HabitForm
                 onSubmit={editingHabit ? handleUpdateHabit : handleCreateHabit}
@@ -234,6 +238,11 @@ function App() {
                     + Create New Habit
                   </button>
                 </div>
+                <HabitSuggestions
+                  onSuggestionSelect={async () => {
+                    await loadHabits()
+                  }}
+                />
                 <HabitList
                   habits={habits}
                   onDelete={handleDeleteClick}

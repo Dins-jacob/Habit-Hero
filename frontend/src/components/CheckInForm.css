@@ -19,6 +19,8 @@
   max-width: 500px;
   width: 100%;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .checkin-form-container h2 {
@@ -54,6 +56,44 @@
   outline: none;
   border-color: #059669;
   box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+.analyzing-indicator {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.mood-analysis {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-left: 4px solid;
+  border-radius: 6px;
+}
+
+.mood-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.mood-sentiment {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.mood-confidence {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.mood-keywords {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
 }
 
 .error-message {
@@ -111,4 +151,3 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-
