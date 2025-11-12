@@ -1,25 +1,53 @@
 .status-card {
   background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(5, 150, 105, 0.1);
+  transition: all 0.3s;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .status-card h2 {
   margin: 0 0 1rem 0;
-  color: #333;
+  color: #0f172a;
   font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .status-indicator {
   margin: 0;
-  color: #666;
-  font-size: 1rem;
+  color: #64748b;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-indicator::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .status-ok {
-  color: #10b981;
+  color: #059669;
   font-weight: 600;
+}
+
+.status-ok::before {
+  background: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
 }
 
 .status-error {
@@ -27,8 +55,28 @@
   font-weight: 600;
 }
 
+.status-error::before {
+  background: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+}
+
 .status-checking {
   color: #f59e0b;
   font-weight: 600;
 }
 
+.status-checking::before {
+  background: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}

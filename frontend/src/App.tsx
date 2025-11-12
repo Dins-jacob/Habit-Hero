@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
-import StatusCard from './components/StatusCard'
 import HabitForm from './components/HabitForm'
 import HabitList from './components/HabitList'
 import AnalyticsDashboard from './components/AnalyticsDashboard'
@@ -9,18 +8,16 @@ import ConfirmDialog from './components/ConfirmDialog'
 import HabitSuggestions from './components/HabitSuggestions'
 import MotivationalQuote from './components/MotivationalQuote'
 import GamificationPanel from './components/GamificationPanel'
-import { apiService } from './services/api'
+import VisualDecorations from './components/VisualDecorations'
 import { habitService } from './services/habitService'
 import { habitLogService } from './services/habitLogService'
 import type { Habit, HabitCreate, HabitUpdate } from './types'
-import type { HabitSuggestion } from './services/aiService'
 import './App.css'
 
 type ViewMode = 'habits' | 'analytics'
 
 function App() {
   console.log('App component rendering...')
-  const [healthStatus, setHealthStatus] = useState<'ok' | 'error' | 'checking...'>('checking...')
   const [habits, setHabits] = useState<Habit[]>([])
   const [isLoadingHabits, setIsLoadingHabits] = useState(false)
   const [showForm, setShowForm] = useState(false)
@@ -35,19 +32,7 @@ function App() {
   const [gamificationRefresh, setGamificationRefresh] = useState(0)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    console.log('Checking health status...')
-    apiService
-      .getHealth()
-      .then((data) => {
-        console.log('Health check result:', data)
-        setHealthStatus(data.status === 'ok' ? 'ok' : 'error')
-      })
-      .catch((err) => {
-        console.error('Health check failed:', err)
-        setHealthStatus('error')
-      })
-  }, [])
+  // Health check removed - StatusCard is hidden
 
   const loadHabits = async () => {
     setIsLoadingHabits(true)
@@ -175,9 +160,10 @@ function App() {
 
   return (
     <div className="app">
+      <VisualDecorations />
       <Header />
       <main className="app-main">
-        <StatusCard status={healthStatus} />
+        {/* <StatusCard status={healthStatus} /> */}
         {error && <div className="error-banner">{error}</div>}
         
         {/* Delete Confirmation Dialog */}

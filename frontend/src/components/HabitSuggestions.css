@@ -1,9 +1,33 @@
 .habit-suggestions {
-  background: white;
-  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(5, 150, 105, 0.1);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.habit-suggestions::before {
+  content: '💡';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 3rem;
+  opacity: 0.15;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.25;
+  }
 }
 
 .suggestions-header {
@@ -11,111 +35,165 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .suggestions-header h3 {
   margin: 0;
   color: #059669;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.suggestions-header h3::before {
+  content: '✨';
+  font-size: 1.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
 }
 
 .refresh-btn {
-  background: #f0fdf4;
-  border: 1px solid #059669;
+  background: white;
+  border: 2px solid #059669;
   color: #059669;
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 1.25rem;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .refresh-btn:hover {
-  background: #059669;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
   color: white;
-  transform: rotate(180deg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
 }
 
 .suggestions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 1;
 }
 
 .suggestion-card {
-  border: 2px solid #d1fae5;
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.2s;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.suggestion-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+.suggestion-card:hover::before {
+  transform: scaleX(1);
 }
 
 .suggestion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
   border-color: #059669;
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15);
 }
 
-.suggestion-content {
-  flex: 1;
-}
-
-.suggestion-content h4 {
-  margin: 0 0 0.5rem 0;
-  color: #333;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.suggestion-meta {
+.suggestion-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
 }
 
-.suggestion-category,
-.suggestion-frequency {
-  padding: 0.25rem 0.5rem;
-  background: #f0fdf4;
-  border-radius: 4px;
-  font-size: 0.75rem;
+.suggestion-name::before {
+  content: '🎯';
+  font-size: 1.2rem;
+}
+
+.suggestion-category {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-radius: 20px;
   color: #059669;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
   text-transform: capitalize;
 }
 
+.suggestion-reason {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
 .add-suggestion-btn {
-  background: #059669;
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
+  border-radius: 8px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  margin-left: 1rem;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
 }
 
 .add-suggestion-btn:hover {
-  background: #047857;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+  background: linear-gradient(135deg, #047857 0%, #059669 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.add-suggestion-btn:active {
+  transform: translateY(0);
 }
 
 .loading,
-.error-message,
-.no-suggestions {
+.error {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: #64748b;
+  font-weight: 500;
 }
 
-.error-message {
+.error {
   color: #ef4444;
-  background: #fee;
-  border-radius: 6px;
-  padding: 1rem;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-radius: 12px;
+  border-left: 4px solid #ef4444;
 }
 
 @media (max-width: 768px) {
@@ -123,15 +201,13 @@
     grid-template-columns: 1fr;
   }
 
-  .suggestion-card {
+  .suggestions-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
 
-  .add-suggestion-btn {
+  .refresh-btn {
     width: 100%;
-    margin-left: 0;
   }
 }
-

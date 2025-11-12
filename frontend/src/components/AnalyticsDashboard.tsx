@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { analyticsService } from '../services/analyticsService'
 import { exportService } from '../services/exportService'
 import type { BestDays, CategoryStats, CheckinsByDate, OverallStats } from '../services/analyticsService'
+import BestDaysChart from './charts/BestDaysChart'
+import CategoryChart from './charts/CategoryChart'
+import CheckinsOverTimeChart from './charts/CheckinsOverTimeChart'
 import './AnalyticsDashboard.css'
 
 export default function AnalyticsDashboard() {
@@ -64,12 +67,6 @@ export default function AnalyticsDashboard() {
     )
   }
 
-  const maxBestDays = getMaxCount(bestDays)
-  const maxCategoryLogs = getMaxCount(
-    Object.fromEntries(Object.entries(categoryStats).map(([k, v]) => [k, v.total_logs]))
-  )
-
-  const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
   const handleExportPDF = async () => {
     setIsExporting(true)
@@ -112,46 +109,14 @@ export default function AnalyticsDashboard() {
       {/* Best Days Chart */}
       <div className="chart-card">
         <h3>Best Days for Check-ins</h3>
-        <div className="chart-container">
-          {dayOrder.map((day) => {
-            const count = bestDays[day] || 0
-            const percentage = maxBestDays > 0 ? (count / maxBestDays) * 100 : 0
-            return (
-              <div key={day} className="bar-item">
-                <div className="bar-label">{day.substring(0, 3)}</div>
-                <div className="bar-wrapper">
-                  <div className="bar" style={{ width: `${percentage}%` }}>
-                    <span className="bar-value">{count}</span>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+        <BestDaysChart data={bestDays} />
       </div>
 
       {/* Category Statistics */}
       {Object.keys(categoryStats).length > 0 && (
         <div className="chart-card">
           <h3>Statistics by Category</h3>
-          <div className="category-stats">
-            {Object.entries(categoryStats).map(([category, stats]) => {
-              const percentage = maxCategoryLogs > 0 ? (stats.total_logs / maxCategoryLogs) * 100 : 0
-              return (
-                <div key={category} className="category-item">
-                  <div className="category-header">
-                    <span className="category-name">{formatCategoryName(category)}</span>
-                    <span className="category-count">
-                      {stats.total_logs} check-ins • {stats.habit_count} habits
-                    </span>
-                  </div>
-                  <div className="category-bar-wrapper">
-                    <div className="category-bar" style={{ width: `${percentage}%` }}></div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+          <CategoryChart data={categoryStats} />
         </div>
       )}
 
@@ -159,10 +124,11 @@ export default function AnalyticsDashboard() {
       {Object.keys(checkinsByDate).length > 0 && (
         <div className="chart-card">
           <h3>Check-ins Over Last 30 Days</h3>
+          <CheckinsOverTimeChart data={checkinsByDate} days={30} />
           <div className="activity-summary">
-            <p>Total check-ins in the last 30 days: {Object.values(checkinsByDate).reduce((a, b) => a + b, 0)}</p>
+            <p>Total check-ins in the last 30 days: <strong>{Object.values(checkinsByDate).reduce((a, b) => a + b, 0)}</strong></p>
             <p className="activity-detail">
-              Average per day: {(Object.values(checkinsByDate).reduce((a, b) => a + b, 0) / 30).toFixed(1)}
+              Average per day: <strong>{(Object.values(checkinsByDate).reduce((a, b) => a + b, 0) / 30).toFixed(1)}</strong>
             </p>
           </div>
         </div>
