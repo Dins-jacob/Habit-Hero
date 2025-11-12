@@ -49,23 +49,32 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-  color: white;
+  background: white;
+  color: #059669;
   padding: 1.5rem;
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 2px solid #059669;
+  transition: all 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(5, 150, 105, 0.2);
 }
 
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: #059669;
 }
 
 .stat-label {
   font-size: 0.9rem;
-  opacity: 0.9;
+  color: #666;
+  font-weight: 500;
 }
 
 .chart-card {

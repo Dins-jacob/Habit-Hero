@@ -6,24 +6,41 @@ import './MotivationalQuote.css'
 export default function MotivationalQuote() {
   const [quote, setQuote] = useState<MotivationalQuote | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
     loadQuote()
+
+    // Set up auto-refresh every 10 seconds
+    const interval = setInterval(() => {
+      loadQuote()
+    }, 5000) // 10 seconds
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval)
   }, [])
 
   const loadQuote = async () => {
     setIsLoading(true)
+    setIsAnimating(true)
+    
     try {
       const data = await aiService.getMotivationalQuote()
-      setQuote(data)
+      
+      // Small delay to allow slide-out animation
+      setTimeout(() => {
+        setQuote(data)
+        setIsAnimating(false)
+        setIsLoading(false)
+      }, 300)
     } catch (err) {
       console.error('Failed to load quote:', err)
-    } finally {
       setIsLoading(false)
+      setIsAnimating(false)
     }
   }
 
-  if (isLoading) {
+  if (!quote && isLoading) {
     return (
       <div className="motivational-quote">
         <div className="loading">Loading quote...</div>
@@ -36,14 +53,10 @@ export default function MotivationalQuote() {
   }
 
   return (
-    <div className="motivational-quote">
+    <div className={`motivational-quote ${isAnimating ? 'animating' : ''}`}>
       <div className="quote-icon">💪</div>
       <blockquote className="quote-text">"{quote.quote}"</blockquote>
       <p className="quote-author">— {quote.author}</p>
-      <button className="refresh-quote-btn" onClick={loadQuote} title="Get another quote">
-        ↻ New Quote
-      </button>
     </div>
   )
 }
-
